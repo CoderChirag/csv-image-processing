@@ -1,0 +1,33 @@
+{
+	"name": "@app/db-service",
+	"version": "0.0.1",
+	"description": "Database Service for architecture",
+	"author": "Chirag Jain",
+	"license": "UNLICENSED",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json"
+	},
+	"dependencies": {
+		"@app/utility-types": "*",
+		"@elastic/elasticsearch": "7.5.0",
+		"elastic-apm-node": "4.11.0",
+		"mongoose": "7.5.0",
+		"mysql2": "3.10.3",
+		"sequelize": "6.37.3"
+	},
+	"devDependencies": {
+		"@app/eslint-config": "*",
+		"@types/node": "^20.3.1",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0",
+		"concurrently": "^8.2.2",
+		"eslint": "^8.42.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-prettier": "^5.0.0",
+		"prettier": "^3.0.0",
+		"tsup": "^8.2.4",
+		"typescript": "^4.3.5"
+	}
+}

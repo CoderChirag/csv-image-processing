@@ -1,0 +1,1 @@
+export const REPOSITORY_SERVICE_FAILURES = {};

@@ -1,0 +1,18 @@
+{
+  "name": "@app/eslint-config",
+  "description": "ESLint config for architecture",
+  "author": "Chirag Jain",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js"
+    }
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "6.14.0",
+    "@typescript-eslint/parser": "6.14.0",
+    "eslint": "8.55.0",
+    "prettier": "3.3.3"
+  }
+}
