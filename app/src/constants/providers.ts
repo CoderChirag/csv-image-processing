@@ -1,5 +1,7 @@
 export const providers = {
-  REPOSITORIES: {} as Record<string, string>,
+  REPOSITORIES: {
+    REQUEST: 'REQUESTS_REPOSITORY',
+  },
   ENTITIES: {},
   SERVICES: {
     CONFIGURATION: 'CONFIGURATION_SERVICE',
