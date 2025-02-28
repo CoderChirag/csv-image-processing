@@ -10,6 +10,7 @@ import { RepositoryModule } from 'src/services/util/repository-service/repositor
 import { LoggerModule } from 'src/services/util/logger/logger.module';
 import { ApiAppLifecycleService } from './api-app-lifecycle.service';
 import { HealthCheckModule } from 'src/modules/health-check/health-check.module';
+import { ImageProcessingModule } from 'src/modules/image-processing/image-processing.module';
 
 export const ApiAppConfigurationModule = ConfigurationServiceModule.forRoot(
   AppEnv,
@@ -23,6 +24,7 @@ export const ApiAppConfigurationModule = ConfigurationServiceModule.forRoot(
     EventEmitterModule.forRoot(),
     HealthCheckModule,
     RepositoryModule.forRoot(),
+    ImageProcessingModule,
   ],
   providers: [
     {

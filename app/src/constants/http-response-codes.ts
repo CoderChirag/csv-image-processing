@@ -1,4 +1,8 @@
 export const HTTP_RESPONSE_CODES = {
+  ACCEPTED: {
+    CODE: 202,
+    MESSAGE: 'Accepted',
+  },
   BAD_REQUEST: {
     CODE: 400,
     MESSAGE: 'Bad request',

@@ -31,7 +31,7 @@ export const config = {
       CODE: HTTP_RESPONSE_CODES.PAYLOAD_TOO_LARGE.CODE,
     },
     INVALID_MULTIPART_FIELD: {
-      MESSAGE: 'Invalid field',
+      MESSAGE: 'Invalid multipart field',
       CODE: HTTP_RESPONSE_CODES.BAD_REQUEST.CODE,
     },
   },

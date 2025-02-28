@@ -29,6 +29,7 @@ export interface MultipartOptions {
   fileField?: string;
   fileFields?: string[];
   filesCountLimit?: number;
+  fileSizeLimit?: number;
   fileSizeLimitQueryField?: string;
   config?: BusboyConfig;
 }
@@ -41,21 +42,25 @@ export const Multipart = createParamDecorator<
   if (!req.headers['content-type']?.includes('multipart/form-data')) {
     return undefined;
   }
-  if (
+
+  if (!data.config) {
+    data.config = {};
+  }
+  if (!data.config.limits) {
+    data.config.limits = {};
+  }
+
+  if (data.fileSizeLimit) {
+    data.config.limits.fileSize = data.fileSizeLimit;
+  } else if (
     data.fileSizeLimitQueryField &&
     Number(req.query[data.fileSizeLimitQueryField])
   ) {
-    if (!data.config) {
-      data.config = {};
-    }
-    if (!data.config.limits) {
-      data.config.limits = {};
-    }
-
     data.config.limits.fileSize = Number(
       req.query[data.fileSizeLimitQueryField],
     );
   }
+
   return getMultipartData(req, data);
 });
 
@@ -72,7 +77,7 @@ function getMultipartData(
       return b.emit(
         'error',
         new HttpException(
-          config.FAILURES.FILE_COUNT_LIMIT_EXCEEDED.MESSAGE,
+          `${config.FAILURES.FILE_COUNT_LIMIT_EXCEEDED.MESSAGE}. Maximum allowed files: ${data.filesCountLimit}`,
           config.FAILURES.FILE_COUNT_LIMIT_EXCEEDED.CODE,
         ),
       );
@@ -84,7 +89,7 @@ function getMultipartData(
       return b.emit(
         'error',
         new HttpException(
-          config.FAILURES.INVALID_MULTIPART_FIELD.MESSAGE,
+          `${config.FAILURES.INVALID_MULTIPART_FIELD.MESSAGE}: ${name}`,
           config.FAILURES.INVALID_MULTIPART_FIELD.CODE,
         ),
       );
@@ -93,7 +98,7 @@ function getMultipartData(
       return stream.emit(
         'error',
         new HttpException(
-          config.FAILURES.FILE_SIZE_LIMIT_EXCEEDED.MESSAGE,
+          `${config.FAILURES.FILE_SIZE_LIMIT_EXCEEDED.MESSAGE}: ${data.config?.limits?.fileSize}`,
           config.FAILURES.FILE_SIZE_LIMIT_EXCEEDED.CODE,
         ),
       );
