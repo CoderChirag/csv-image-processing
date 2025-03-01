@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { providers } from 'src/constants';
 import { IRequestRepository } from 'src/interfaces/repositories/request/request-repository.interface';
 import { DB_SCHEMAS } from 'src/models';
-import { Request } from 'src/models/request/request.schema';
+import { Request, RequestStatus } from 'src/models/request/request.schema';
 
 @Injectable()
 export class RequestRepository implements IRequestRepository {
@@ -20,5 +20,16 @@ export class RequestRepository implements IRequestRepository {
     request: Omit<Request, '_id' | 'createdAt' | 'updatedAt'>,
   ): Promise<Request> {
     return await this.Request.create(request);
+  }
+
+  async updateStatus(
+    requestId: string,
+    status: RequestStatus,
+    message: string,
+  ): Promise<Request | null> {
+    return await this.Request.findOneAndUpdate(
+      { requestId },
+      { status, message },
+    );
   }
 }

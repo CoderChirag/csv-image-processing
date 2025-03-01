@@ -1,5 +1,5 @@
 import { Product } from 'src/models/request/product.schema';
-import { Request } from 'src/models/request/request.schema';
+import { Request, RequestStatus } from 'src/models/request/request.schema';
 
 export interface IRequestRepository {
   createRequest(
@@ -7,4 +7,10 @@ export interface IRequestRepository {
       products: Record<string, Omit<Product, '_id'>>;
     },
   ): Promise<Request>;
+
+  updateStatus(
+    requestId: string,
+    status: RequestStatus,
+    message: string,
+  ): Promise<Request | null>;
 }
