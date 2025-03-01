@@ -1,1 +1,0 @@
-# CSV Image Processing Service
