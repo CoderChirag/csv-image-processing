@@ -7,15 +7,19 @@ export const CSV_ENTITY_CONFIG = {
 
 export const CSV_ENTITY_FAILURES = {
   INCORRECT_FILE_FORMAT: {
-    MESSAGE: 'Incorrect file format. Only CSV files are allowed.',
+    MESSAGE: 'Incorrect file format. Only CSV files are allowed',
+    CODE: HTTP_RESPONSE_CODES.UNPROCESSABLE_ENTITY.CODE,
+  },
+  CSV_HEADER_PARSE_ERROR: {
+    MESSAGE: 'CSV header parsing error',
     CODE: HTTP_RESPONSE_CODES.UNPROCESSABLE_ENTITY.CODE,
   },
   CSV_PARSE_ERROR: {
-    MESSAGE: 'CSV file parsing error.',
+    MESSAGE: 'CSV file parsing error',
     CODE: HTTP_RESPONSE_CODES.UNPROCESSABLE_ENTITY.CODE,
   },
-  INVALID_PRODUCT_DATA: {
-    MESSAGE: 'Invalid product data.',
+  INVALID_PRODUCT: {
+    MESSAGE: 'Invalid product',
     CODE: HTTP_RESPONSE_CODES.UNPROCESSABLE_ENTITY.CODE,
   },
 };

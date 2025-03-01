@@ -1,11 +1,5 @@
 import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsNotEmpty,
-  IsString,
-  IsUrl,
-  ValidateNested,
-} from 'class-validator';
+import { IsArray, IsNotEmpty, IsString, IsUrl } from 'class-validator';
 
 export class CSVProduct {
   @IsNotEmpty()
@@ -22,10 +16,6 @@ export class CSVProduct {
   outputImageUrls: string[];
 }
 
-export class CSVData {
-  @IsArray()
-  @IsNotEmpty()
-  @ValidateNested({ each: true })
-  @Type(() => CSVProduct)
-  products: CSVProduct[];
+export interface CSVData {
+  products: Record<string, CSVProduct>;
 }

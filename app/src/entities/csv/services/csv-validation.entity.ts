@@ -19,10 +19,18 @@ export class CSVValidationEntity implements ICSVValidationEntity {
     return data;
   }
 
+  private validateMimeType(mimeType: string): void {
+    if (mimeType !== CSV_ENTITY_CONFIG.ALLOWED_MIME_TYPE)
+      throw new HttpException(
+        `${CSV_ENTITY_FAILURES.INCORRECT_FILE_FORMAT.MESSAGE}. Required: ${CSV_ENTITY_CONFIG.ALLOWED_MIME_TYPE}, Received: ${mimeType}`,
+        CSV_ENTITY_FAILURES.INCORRECT_FILE_FORMAT.CODE,
+      );
+  }
+
   // [Memory Optimization]: Parsing CSV file chunk by chunk from Stream rather than converting complete file to Buffer. Would optimize memory usage for large files.
   private async parseData(csvFile: Readable): Promise<CSVData> {
     const data: CSVData = {
-      products: [],
+      products: {},
     };
     let partialRow = '';
     let headerRow: string[] = [];
@@ -45,7 +53,9 @@ export class CSVValidationEntity implements ICSVValidationEntity {
         if (this.isEmptyRow(cols)) continue;
 
         const product = this.getProductFromRow(cols);
-        data.products.push(product);
+        await this.validateProduct(product);
+        // Merging input image urls for same product name
+        this.mergeProductsData(data, product);
       }
     }
 
@@ -58,23 +68,78 @@ export class CSVValidationEntity implements ICSVValidationEntity {
           headerRow = cols;
         } else {
           const product = this.getProductFromRow(cols);
-          data.products.push(product);
+          await this.validateProduct(product);
+          // Merging input image urls for same product name
+          this.mergeProductsData(data, product);
         }
       }
     }
-    await this.validateProductsData(data);
     return data;
   }
 
-  private async validateProductsData(data: CSVData): Promise<void> {
-    const productsInstance = plainToClass(CSVData, data);
-    const errors = await validate(productsInstance);
-    if (errors.length > 0) {
-      throw new HttpException(
-        `${CSV_ENTITY_FAILURES.INVALID_PRODUCT_DATA.MESSAGE}: ${errors.map((error) => error.toString()).join(', ')}`,
-        CSV_ENTITY_FAILURES.INVALID_PRODUCT_DATA.CODE,
-      );
+  private parseCols(row: string): string[] {
+    const cols: string[] = [];
+    let currentCol = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < row.length; i++) {
+      const char = row[i];
+      if (char === '"') {
+        // Handling escaped quotes (double quotes in the row)
+        if (i + 1 < row.length && row[i + 1] === '"') {
+          currentCol += '"';
+          i++;
+        } else {
+          // Handling non-escaped quotes
+          let j = i - 1,
+            k = i + 1;
+          while (j >= 0 && row[j] === ' ') j--;
+          while (k < row.length && row[k] === ' ') k++;
+          if (j < 0 || row[j] === ',' || k === row.length || row[k] === ',') {
+            // If quote is just after or before a comma, it's not a text quote
+            inQuotes = !inQuotes;
+          } else {
+            // If quote is not just after or before a comma, it's a text quote
+            currentCol += char;
+          }
+        }
+      } else if (char === ',' && !inQuotes) {
+        // col splitting, only when comma is not in quotes
+        cols.push(currentCol.trim());
+        currentCol = '';
+      } else {
+        currentCol += char;
+      }
     }
+
+    if (inQuotes)
+      throw new HttpException(
+        `${CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.MESSAGE}. Unclosed quote in row: ${row}`,
+        CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.CODE,
+      );
+    cols.push(currentCol.trim());
+    return cols;
+  }
+
+  private validateHeaderRow(headers: string[]): void {
+    if (headers.length !== CSV_ENTITY_CONFIG.EXPECTED_HEADERS.length)
+      throw new HttpException(
+        `${CSV_ENTITY_FAILURES.CSV_HEADER_PARSE_ERROR.MESSAGE}: ${headers.join(', ')}. Expected: ${CSV_ENTITY_CONFIG.EXPECTED_HEADERS.length} columns, Received: ${headers.length} columns.`,
+        CSV_ENTITY_FAILURES.CSV_HEADER_PARSE_ERROR.CODE,
+      );
+
+    const headerMatch = CSV_ENTITY_CONFIG.EXPECTED_HEADERS.every(
+      (header, index) => headers[index].toLowerCase() === header.toLowerCase(),
+    );
+    if (!headerMatch)
+      throw new HttpException(
+        `${CSV_ENTITY_FAILURES.CSV_HEADER_PARSE_ERROR.MESSAGE}: Invalid headers ${headers.join(', ')}. Expected: ${CSV_ENTITY_CONFIG.EXPECTED_HEADERS.join(', ')}.`,
+        CSV_ENTITY_FAILURES.CSV_HEADER_PARSE_ERROR.CODE,
+      );
+  }
+
+  private isEmptyRow(cols: string[]): boolean {
+    return cols.every((col) => col.trim() === '');
   }
 
   private getProductFromRow(cols: string[]): CSVProduct {
@@ -95,77 +160,35 @@ export class CSVValidationEntity implements ICSVValidationEntity {
     return product;
   }
 
-  private validateHeaderRow(headers: string[]): void {
-    if (headers.length !== CSV_ENTITY_CONFIG.EXPECTED_HEADERS.length)
+  private async validateProduct(product: CSVProduct): Promise<void> {
+    const productInstance = plainToClass(CSVProduct, product);
+    const errors = await validate(productInstance);
+    if (errors.length > 0) {
       throw new HttpException(
-        `${CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.MESSAGE} Expected: ${CSV_ENTITY_CONFIG.EXPECTED_HEADERS.length} columns, Received: ${headers.length} columns.`,
-        CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.CODE,
+        `${CSV_ENTITY_FAILURES.INVALID_PRODUCT.MESSAGE}: ${JSON.stringify(product)}. Errors: ${errors.map((error) => (error.constraints ? Object.values(error.constraints).join(', ') : error.toString())).join(', ')}`,
+        CSV_ENTITY_FAILURES.INVALID_PRODUCT.CODE,
       );
-
-    const headerMatch = CSV_ENTITY_CONFIG.EXPECTED_HEADERS.every(
-      (header, index) => headers[index].toLowerCase() === header.toLowerCase(),
-    );
-    if (!headerMatch)
-      throw new HttpException(
-        `${CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.MESSAGE}: Invalid headers. Expected: ${CSV_ENTITY_CONFIG.EXPECTED_HEADERS.join(', ')}, Received: ${headers.join(', ')}.`,
-        CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.CODE,
-      );
+    }
   }
 
-  private isEmptyRow(cols: string[]): boolean {
-    return cols.every((col) => col.trim() === '');
+  private mergeProductsData(data: CSVData, product: CSVProduct): void {
+    if (data.products[product.name]) {
+      data.products[product.name].inputImageUrls = Array.from(
+        new Set([
+          ...data.products[product.name].inputImageUrls,
+          ...product.inputImageUrls,
+        ]),
+      );
+    } else {
+      data.products[product.name] = product;
+    }
   }
 
   private validateRow(cols: string[]): void {
     if (cols.length !== CSV_ENTITY_CONFIG.EXPECTED_HEADERS.length)
       throw new HttpException(
-        `${CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.MESSAGE} Expected: ${CSV_ENTITY_CONFIG.EXPECTED_HEADERS.length} columns, Received: ${cols.length} columns.`,
+        `${CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.MESSAGE}: ${cols.join(', ')}. Expected: ${CSV_ENTITY_CONFIG.EXPECTED_HEADERS.length} columns, Received: ${cols.length} columns.`,
         CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.CODE,
       );
-  }
-
-  private validateMimeType(mimeType: string): void {
-    if (mimeType !== CSV_ENTITY_CONFIG.ALLOWED_MIME_TYPE)
-      throw new HttpException(
-        `${CSV_ENTITY_FAILURES.INCORRECT_FILE_FORMAT.MESSAGE} Received: ${mimeType}`,
-        CSV_ENTITY_FAILURES.INCORRECT_FILE_FORMAT.CODE,
-      );
-  }
-
-  private parseCols(row: string): string[] {
-    const cols: string[] = [];
-    let currentCol = '';
-    let inQuotes = false;
-    let quoteStart = false;
-
-    for (let i = 0; i < row.length; i++) {
-      const char = row[i];
-      if (char === '"') {
-        // Handling escaped quotes (double quotes in the row)
-        if (i + 1 < row.length && row[i + 1] === '"') {
-          currentCol += '"';
-          i++;
-        } else if (currentCol.length !== 0 && !inQuotes) {
-          throw new HttpException(
-            `${CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.MESSAGE}: Unexpected quote in middle of field: ${row}`,
-            CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.CODE,
-          );
-        } else inQuotes = !inQuotes;
-      } else if (char === ',' && !inQuotes) {
-        // col splitting, only when comma is not in quotes
-        cols.push(currentCol.trim());
-        currentCol = '';
-      } else {
-        currentCol += char;
-      }
-    }
-
-    if (inQuotes)
-      throw new HttpException(
-        `${CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.MESSAGE}: Unclosed quote in the last field: ${row}`,
-        CSV_ENTITY_FAILURES.CSV_PARSE_ERROR.CODE,
-      );
-    cols.push(currentCol.trim());
-    return cols;
   }
 }
