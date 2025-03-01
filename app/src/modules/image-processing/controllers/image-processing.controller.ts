@@ -14,18 +14,18 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { IMAGE_PROCESSING_CONFIG } from './constants/config';
+import { IMAGE_PROCESSING_CONFIG } from '../constants/config';
 import { MultipartFileDto } from 'src/dtos/http/multipart/file.dto';
 import { Multipart, MultiPartData } from 'src/decorators/multipart.decorator';
 import { HTTP_RESPONSE_CODES, providers } from 'src/constants';
 import { ICSVValidationEntity } from 'src/interfaces/entities/csv/csv-validation.interface';
 import { CSVData } from 'src/dtos/entities/csv/csv.dto';
-import { ISchedulingService } from './interfaces/schedule-service.interface';
+import { ISchedulingService } from '../interfaces/schedule-service.interface';
 import {
   ProcessCSVReqQueryDto,
   ProcessCSVResData,
   ProcessCSVResDto,
-} from './dtos/controllers/image-processing.dto';
+} from '../dtos/controllers/image-processing.dto';
 import { HttpReqValidationPipe } from 'src/pipes/http-req-validation.pipe';
 
 @ApiTags(IMAGE_PROCESSING_CONFIG.API_TAGS.IMAGE_PROCESSING)

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "nest build",
     "start": "nest start --exec \"node -r ./apm.cjs \"",
-    "start:dev": "env-cmd -f .env.local nest start --exec \"node -r ./apm.cjs \" --watch",
+    "start:dev": "APP_NAME=api-app PORT=4000 env-cmd -f .env.local nest start --exec \"node -r ./apm.cjs \" --watch",
+    "start:consumer:dev": "APP_NAME=consumer-app PORT=4001 env-cmd -f .env.local nest start --exec \"node -r ./apm.cjs \" --watch",
     "start:debug": "nest start --exec \"node -r ./apm.cjs \" --debug --watch",
     "start:prod": "node -r ./apm.cjs dist/main",
     "test": "env-cmd -f .env.test jest",

@@ -14,4 +14,7 @@ export const providers = {
     REPOSITORY: 'REPOSITORY_SERVICE',
     QUEUE: 'QUEUE_SERVICE',
   },
+  MODULES: {
+    IMAGE_PROCESSOR: 'IMAGE_PROCESSOR_SERVICE',
+  },
 } as const;

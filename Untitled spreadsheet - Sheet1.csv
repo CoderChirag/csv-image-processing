@@ -1,0 +1,11 @@
+S. No.,Product Name,Input Image Urls
+1.,1,"https://google.com, https://abcd.com,https://alpha.com"
+2.,SKU2,"https://google.com, https://abcsd.com"
+3.,SK"U"3,"https://google.com, https://abcsd.com"
+4.,"SK"U"3","https://google.com, https://abcsd.com"
+5.,"S"K"U"3","https://google.com, https://abcsd.com"
+6.,"SK""U""3","https://google.com, https://abcsd.com"
+7.,SK""U""3,"https://google.com, https://abcsd.com"
+8.,"SKU3","https://google.com, https://abcsd.com"
+9.,""SKU"3"","https://google.com, https://abcsd.com"
+

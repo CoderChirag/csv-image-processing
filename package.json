@@ -12,6 +12,7 @@
     "build": "lerna run build --stream",
     "graph": "nx graph",
     "start:dev": "lerna run start:dev --scope app --stream",
+    "start:consumer:dev": "lerna run start:consumer:dev --scope app --stream",
     "test": "lerna run test --scope app --stream",
     "test:cov": "lerna run test:cov --scope app --stream"
   },

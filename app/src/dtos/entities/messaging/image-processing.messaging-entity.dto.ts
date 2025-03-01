@@ -10,3 +10,7 @@ export interface ImageProcessingRequest {
   webhookUrl: string;
   products: ImageProcessingProducts;
 }
+
+export type ImageProcessingHandler = (
+  msg: ImageProcessingRequest,
+) => Promise<void>;

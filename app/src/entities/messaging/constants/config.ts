@@ -4,11 +4,14 @@ export const MESSAGING_ENTITY_CONFIG = {
   SCHEMAS_DIR: 'avro-schemas',
   PUBLISH_TOPICS: {
     IMAGE_PROCESSING: {
-      TOPIC_NAME: `image-processing-${config.NODE_ENV}`,
+      TOPIC_NAME: config.QUEUE.IMAGE_PROCESSING_TOPIC_NAME,
       DLQ_REQUIRED: true,
       PARTITIONS: 3,
-      DLQ_TOPIC_NAME: `image-processing-${config.NODE_ENV}.DLQ`,
+      DLQ_TOPIC_NAME: config.QUEUE.IMAGE_PROCESSING_DLQ_TOPIC_NAME,
       DLQ_PARTITIONS: 3,
     },
+  },
+  CONSUMER_GROUP_ID: {
+    IMAGE_PROCESSING: config.QUEUE.IMAGE_PROCESSING_CONSUMER_GROUP_ID,
   },
 };

@@ -37,4 +37,14 @@ export class AppEnv {
   @IsString()
   @IsNotEmpty()
   SCHEMA_REGISTRY_HOST: string;
+
+  @IsString()
+  @IsNotEmpty()
+  IMAGE_PROCESSING_TOPIC_NAME: string;
+  @IsString()
+  @IsNotEmpty()
+  IMAGE_PROCESSING_DLQ_TOPIC_NAME: string;
+  @IsString()
+  @IsNotEmpty()
+  IMAGE_PROCESSING_CONSUMER_GROUP_ID: string;
 }

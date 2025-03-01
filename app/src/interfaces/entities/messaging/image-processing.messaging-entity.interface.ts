@@ -1,4 +1,7 @@
-import { ImageProcessingProducts } from 'src/dtos/entities/messaging/image-processing.messaging-entity.dto';
+import {
+  ImageProcessingHandler,
+  ImageProcessingProducts,
+} from 'src/dtos/entities/messaging/image-processing.messaging-entity.dto';
 
 export interface IImageProcessingMessagingEntity {
   publishProcessingRequest(
@@ -6,4 +9,6 @@ export interface IImageProcessingMessagingEntity {
     products: ImageProcessingProducts,
     webhookUrl: string,
   ): Promise<string>;
+
+  subscribe(handler: ImageProcessingHandler): Promise<void>;
 }

@@ -4,9 +4,11 @@ import { NestFactory } from '@nestjs/core';
 import { APP_NAMES, config } from 'src/constants';
 import { ApiAppModule } from 'src/apps/api/api-app.module';
 import { setupDocs } from './util/swagger/setup-docs';
+import { ConsumerAppModule } from './apps/consumer/consumer-app.module';
+import { ConsumerAppLifecycleService } from './apps/consumer/consumer-app-lifecycle.service';
 
 async function bootstrap() {
-  let app: INestApplication;
+  let app: INestApplication | undefined;
   let server: any;
   const appName = config.APP.NAME;
   apm.logger.info(`Initializing startApp ${appName}`);
@@ -22,6 +24,15 @@ async function bootstrap() {
     server.headersTimeout = config.APP.HEADERS_TIMEOUT;
 
     setupDocs(app);
+
+    await app.listen(config.APP.PORT);
+    apm.logger.info(`App Started on Port: ${config.APP.PORT}`);
+  } else if (appName === APP_NAMES.CONSUMER_APP) {
+    const app = await NestFactory.createApplicationContext(ConsumerAppModule, {
+      bufferLogs: true,
+    });
+
+    await app.get(ConsumerAppLifecycleService).consume();
   } else {
     const errorMessage = `Invalid app name ${appName}`;
     apm.logger.error(errorMessage);
@@ -30,8 +41,6 @@ async function bootstrap() {
 
   if (app) {
     app.enableShutdownHooks();
-    await app.listen(config.APP.PORT);
-    apm.logger.info(`App Started on Port: ${config.APP.PORT}`);
     global.app = app;
   }
 }
