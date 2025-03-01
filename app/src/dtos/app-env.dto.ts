@@ -47,4 +47,20 @@ export class AppEnv {
   @IsString()
   @IsNotEmpty()
   IMAGE_PROCESSING_CONSUMER_GROUP_ID: string;
+
+  @IsString()
+  @IsNotEmpty()
+  FILE_UPLOAD_TOKEN: string;
+  @IsString()
+  @IsNotEmpty()
+  FILE_UPLOAD_BASE_URL: string;
+  @IsString()
+  @IsNotEmpty()
+  FILE_UPLOAD_AUTHOR: string;
+  @IsString()
+  @IsNotEmpty()
+  FILE_UPLOAD_EMAIL: string;
+  @IsString()
+  @IsNotEmpty()
+  FILE_UPLOAD_BRANCH: string;
 }

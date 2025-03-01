@@ -12,6 +12,13 @@ export class CSVProduct {
   inputImageUrls: string[];
 }
 
+export class CSVProductOutput extends CSVProduct {
+  @IsArray()
+  @IsNotEmpty()
+  @IsUrl({}, { each: true })
+  outputImageUrls: string[];
+}
+
 export interface CSVData {
   products: Record<string, CSVProduct>;
 }

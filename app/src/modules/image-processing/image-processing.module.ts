@@ -7,9 +7,18 @@ import { ImageProcessingController } from './controllers/image-processing.contro
 import { APP_NAMES, config, providers } from 'src/constants';
 import { ImageProcessor } from './processors/image.processor';
 import { StatusService } from './services/status.service';
+import { HttpClientModule } from 'src/services/http-client-service/http-client.module';
 
 @Module({
-  imports: [CSVEntityModule, MessagingEntityModule],
+  imports: [
+    CSVEntityModule,
+    MessagingEntityModule,
+    HttpClientModule.forFeature(
+      {},
+      IMAGE_PROCESSING_CONFIG.PROVIDERS.HTTP_CLIENT,
+      false,
+    ),
+  ],
   controllers:
     config.APP.NAME === APP_NAMES.API_APP ? [ImageProcessingController] : [],
   providers: [

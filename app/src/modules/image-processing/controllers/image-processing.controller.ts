@@ -22,7 +22,7 @@ import { IMAGE_PROCESSING_CONFIG } from '../constants/config';
 import { MultipartFileDto } from 'src/dtos/http/multipart/file.dto';
 import { Multipart, MultiPartData } from 'src/decorators/multipart.decorator';
 import { HTTP_RESPONSE_CODES, providers } from 'src/constants';
-import { ICSVValidationEntity } from 'src/interfaces/entities/csv/csv-validation.interface';
+import { ICSVEntity } from 'src/interfaces/entities/csv/csv.interface';
 import { CSVData } from 'src/dtos/entities/csv/csv.dto';
 import { ISchedulingService } from '../interfaces/schedule-service.interface';
 import {
@@ -39,8 +39,8 @@ import { IStatusService } from '../interfaces/status-service.interface';
 @Controller('image-processing')
 export class ImageProcessingController {
   constructor(
-    @Inject(providers.ENTITIES.CSV_VALIDATION)
-    private readonly csvValidationEntity: ICSVValidationEntity,
+    @Inject(providers.ENTITIES.CSV)
+    private readonly CSVEntity: ICSVEntity,
     @Inject(IMAGE_PROCESSING_CONFIG.PROVIDERS.SCHEDULING)
     private readonly schedulingService: ISchedulingService,
     @Inject(IMAGE_PROCESSING_CONFIG.PROVIDERS.STATUS)
@@ -78,7 +78,7 @@ export class ImageProcessingController {
     // [Memory Optimization]: Accepting Multipart file as a Stream rather than Buffer, using a Custom Decorator
     for await (const part of multiPart) {
       if (part.type === 'file') {
-        csvData = await this.csvValidationEntity.validateAndParse(
+        csvData = await this.CSVEntity.validateAndParse(
           part.stream,
           part.info.mimeType,
         );

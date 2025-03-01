@@ -3,6 +3,12 @@ import { HTTP_RESPONSE_CODES } from 'src/constants';
 export const CSV_ENTITY_CONFIG = {
   ALLOWED_MIME_TYPE: 'text/csv',
   EXPECTED_HEADERS: ['S. No.', 'Product Name', 'Input Image Urls'],
+  CSV_OUTPUT_HEADERS: [
+    'S. No.',
+    'Product Name',
+    'Input Image Urls',
+    'Output Image Urls',
+  ],
 };
 
 export const CSV_ENTITY_FAILURES = {

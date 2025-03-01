@@ -55,4 +55,21 @@ export class RequestRepository implements IRequestRepository {
       message: request.message,
     };
   }
+
+  async updateRequest(
+    requestId: string,
+    request: Partial<Request>,
+  ): Promise<Request> {
+    const updatedRequest = await this.Request.findOneAndUpdate(
+      { requestId },
+      request,
+    );
+    if (!updatedRequest)
+      throw new HttpException(
+        REQUEST_REPOSITORY_FAILURES.REQUEST_NOT_FOUND.MESSAGE,
+        REQUEST_REPOSITORY_FAILURES.REQUEST_NOT_FOUND.CODE,
+      );
+
+    return updatedRequest;
+  }
 }

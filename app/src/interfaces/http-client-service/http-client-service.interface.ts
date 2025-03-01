@@ -100,6 +100,7 @@ export interface HttpClient {
 }
 
 export interface HttpClientError<T = any, K = any> {
+  message: string;
   config: HttpRequestConfig<K>;
   code?: string;
   request?: any;

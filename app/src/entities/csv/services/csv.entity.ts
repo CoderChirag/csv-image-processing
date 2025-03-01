@@ -1,13 +1,17 @@
 import { Readable } from 'node:stream';
 import { HttpException, Injectable } from '@nestjs/common';
-import { ICSVValidationEntity } from 'src/interfaces/entities/csv/csv-validation.interface';
-import { CSVData, CSVProduct } from 'src/dtos/entities/csv/csv.dto';
+import { ICSVEntity } from 'src/interfaces/entities/csv/csv.interface';
+import {
+  CSVData,
+  CSVProduct,
+  CSVProductOutput,
+} from 'src/dtos/entities/csv/csv.dto';
 import { CSV_ENTITY_CONFIG, CSV_ENTITY_FAILURES } from '../constants/config';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
 @Injectable()
-export class CSVValidationEntity implements ICSVValidationEntity {
+export class CSVEntity implements ICSVEntity {
   constructor() {}
 
   async validateAndParse(
@@ -17,6 +21,17 @@ export class CSVValidationEntity implements ICSVValidationEntity {
     this.validateMimeType(mimeType);
     const data = await this.parseData(csvFile);
     return data;
+  }
+
+  async buildCSV(products: Record<string, CSVProductOutput>): Promise<string> {
+    let csv = '';
+    csv += CSV_ENTITY_CONFIG.CSV_OUTPUT_HEADERS.join(',') + '\r\n';
+    let i = 1;
+    for (const product of Object.values(products)) {
+      csv += `${i},${product.name},"${product.inputImageUrls.join(',')}","${product.outputImageUrls.join(',')}"\r\n`;
+      i++;
+    }
+    return csv;
   }
 
   private validateMimeType(mimeType: string): void {

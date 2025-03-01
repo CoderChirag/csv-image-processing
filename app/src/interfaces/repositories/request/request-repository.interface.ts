@@ -16,4 +16,11 @@ export interface IRequestRepository {
   ): Promise<Request>;
 
   getStatus(requestId: string): Promise<RequestStatusAndMessage>;
+
+  updateRequest(
+    requestId: string,
+    request: Partial<Omit<Request, 'products'>> & {
+      products?: Record<string, Omit<Product, '_id'>>;
+    },
+  ): Promise<Request>;
 }

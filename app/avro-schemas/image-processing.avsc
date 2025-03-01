@@ -8,6 +8,10 @@
       "logicalType": "uuid"
     },
     {
+      "name": "webhookUrl",
+      "type": "string"
+    },
+    {
       "name": "products",
       "type": {
         "type": "map",

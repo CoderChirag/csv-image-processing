@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { providers } from 'src/constants';
-import { CSVValidationEntity } from './services/csv-validation.entity';
+import { CSVEntity } from './services/csv.entity';
 
 @Module({
   imports: [],
   providers: [
     {
-      provide: providers.ENTITIES.CSV_VALIDATION,
-      useClass: CSVValidationEntity,
+      provide: providers.ENTITIES.CSV,
+      useClass: CSVEntity,
     },
   ],
-  exports: [providers.ENTITIES.CSV_VALIDATION],
+  exports: [providers.ENTITIES.CSV],
 })
 export class CSVEntityModule {}

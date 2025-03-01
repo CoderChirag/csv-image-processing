@@ -31,6 +31,13 @@ export const config = {
     IMAGE_PROCESSING_CONSUMER_GROUP_ID:
       process.env.IMAGE_PROCESSING_CONSUMER_GROUP_ID!,
   },
+  IMAGE_PROCESSING: {
+    FILE_UPLOAD_TOKEN: process.env.FILE_UPLOAD_TOKEN!,
+    FILE_UPLOAD_BASE_URL: process.env.FILE_UPLOAD_BASE_URL!,
+    FILE_UPLOAD_AUTHOR: process.env.FILE_UPLOAD_AUTHOR!,
+    FILE_UPLOAD_EMAIL: process.env.FILE_UPLOAD_EMAIL!,
+    FILE_UPLOAD_BRANCH: process.env.FILE_UPLOAD_BRANCH!,
+  },
   FAILURES: {
     FILE_COUNT_LIMIT_EXCEEDED: {
       MESSAGE: 'File count limit exceeded',
