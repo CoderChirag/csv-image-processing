@@ -21,6 +21,11 @@ export const config = {
     MONGO_SERVER_SELECTION_TIMEOUT: 180000,
     MONGO_POOL_SIZE: 10,
   },
+  QUEUE: {
+    KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID!,
+    KAFKA_BROKERS: process.env.KAFKA_BROKERS!.split(','),
+    SCHEMA_REGISTRY_HOST: process.env.SCHEMA_REGISTRY_HOST!,
+  },
   FAILURES: {
     FILE_COUNT_LIMIT_EXCEEDED: {
       MESSAGE: 'File count limit exceeded',

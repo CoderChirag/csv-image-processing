@@ -171,7 +171,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@app/nestjs-queue-service@workspace:packages/nestjs-queue-service":
+"@app/nestjs-queue-service@npm:*, @app/nestjs-queue-service@workspace:packages/nestjs-queue-service":
   version: 0.0.0-use.local
   resolution: "@app/nestjs-queue-service@workspace:packages/nestjs-queue-service"
   dependencies:
@@ -4812,6 +4812,8 @@ __metadata:
   dependencies:
     "@app/db-service": "npm:*"
     "@app/nestjs-db-service": "npm:*"
+    "@app/nestjs-queue-service": "npm:*"
+    "@app/queue-service": "npm:*"
     "@azure/identity": "npm:4.6.0"
     "@azure/storage-blob": "npm:12.11.0"
     "@nestjs/cli": "npm:10.4.8"

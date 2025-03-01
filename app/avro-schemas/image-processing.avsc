@@ -1,0 +1,34 @@
+{
+  "type": "record",
+  "name": "ProductData",
+  "fields": [
+    {
+      "name": "requestId",
+      "type": "string",
+      "logicalType": "uuid"
+    },
+    {
+      "name": "products",
+      "type": {
+        "type": "map",
+        "values": {
+          "type": "record",
+          "name": "Product",
+          "fields": [
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "inputImageUrls",
+              "type": {
+                "type": "array",
+                "items": "string"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

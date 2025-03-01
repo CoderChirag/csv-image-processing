@@ -5,8 +5,8 @@ import axios, {
   AxiosRequestConfig,
   AxiosError,
 } from 'axios';
-import { IHttpClientService } from 'src/interfaces/util/http-client-service/http-client-service.interface';
-import { ILogger } from 'src/interfaces/util/logger/logger.interface';
+import { IHttpClientService } from 'src/interfaces/http-client-service/http-client-service.interface';
+import { ILogger } from 'src/interfaces/logger/logger.interface';
 
 /** Boundary for axios */
 @Injectable()

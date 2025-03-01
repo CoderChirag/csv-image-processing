@@ -2,11 +2,13 @@ import { Schema } from 'mongoose';
 
 export interface Product {
   _id: string;
-  inputImages: string[];
-  outputImages: string[];
+  name: string;
+  inputImageUrls: string[];
+  outputImageUrls?: string[];
 }
 
 export const ProductSchema = new Schema<Product>({
-  inputImages: { type: [String], required: true, default: [] },
-  outputImages: { type: [String], required: true, default: [] },
+  name: { type: String, required: true },
+  inputImageUrls: { type: [String], required: true, default: [] },
+  outputImageUrls: { type: [String], default: [] },
 });

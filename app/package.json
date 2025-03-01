@@ -17,6 +17,8 @@
   "dependencies": {
     "@app/db-service": "*",
     "@app/nestjs-db-service": "*",
+    "@app/nestjs-queue-service": "*",
+    "@app/queue-service": "*",
     "@azure/identity": "4.6.0",
     "@azure/storage-blob": "12.11.0",
     "@nestjs/common": "10.4.8",

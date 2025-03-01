@@ -1,8 +1,8 @@
 import { MongoService } from '@app/db-service';
 import { Inject, Injectable } from '@nestjs/common';
 import { providers } from 'src/constants';
-import { ConnectionStatus } from 'src/dtos/util/repositories/services/repository-service.dto';
-import { IRepositoryService } from 'src/interfaces/util/repositories/services/repository-service.interface';
+import { ConnectionStatus } from 'src/dtos/repositories/services/repository-service.dto';
+import { IRepositoryService } from 'src/interfaces/repositories/services/repository-service.interface';
 import { DB_SCHEMAS } from 'src/models';
 
 @Injectable()

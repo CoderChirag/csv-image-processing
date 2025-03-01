@@ -1,5 +1,5 @@
 import { DynamicModule } from '@nestjs/common';
-import { ConfigurationServiceModule } from 'src/services/util/configuration-service/configuration-service.module';
+import { ConfigurationServiceModule } from 'src/services/configuration-service/configuration-service.module';
 import { MockAppEnv } from 'tests/mocks/dtos/app-env.dto.mock';
 import { mockAppEnvTransformer } from 'tests/mocks/transformers/app-env.transformer.mock';
 

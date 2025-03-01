@@ -146,7 +146,6 @@ export class CSVValidationEntity implements ICSVValidationEntity {
     const product: CSVProduct = {
       name: '',
       inputImageUrls: [],
-      outputImageUrls: [],
     };
 
     this.validateRow(cols);

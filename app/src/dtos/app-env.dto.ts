@@ -27,4 +27,14 @@ export class AppEnv {
   @IsString()
   @IsNotEmpty()
   MONGODB_URI: string;
+
+  @IsString()
+  @IsNotEmpty()
+  KAFKA_CLIENT_ID: string;
+  @IsString()
+  @IsNotEmpty()
+  KAFKA_BROKERS: string;
+  @IsString()
+  @IsNotEmpty()
+  SCHEMA_REGISTRY_HOST: string;
 }

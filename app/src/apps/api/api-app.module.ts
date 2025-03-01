@@ -3,14 +3,15 @@ import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ReqResInterceptor } from 'src/interceptors/request-response.interceptor';
 import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
-import { ConfigurationServiceModule } from 'src/services/util/configuration-service/configuration-service.module';
+import { ConfigurationServiceModule } from 'src/services/configuration-service/configuration-service.module';
 import { AppEnv } from 'src/dtos/app-env.dto';
 import { appEnvTransformer } from 'src/transformers/app-env.transformer';
-import { RepositoryModule } from 'src/services/util/repository-service/repository.module';
-import { LoggerModule } from 'src/services/util/logger/logger.module';
+import { RepositoryModule } from 'src/services/repository-service/repository.module';
+import { LoggerModule } from 'src/services/logger/logger.module';
 import { ApiAppLifecycleService } from './api-app-lifecycle.service';
 import { HealthCheckModule } from 'src/modules/health-check/health-check.module';
 import { ImageProcessingModule } from 'src/modules/image-processing/image-processing.module';
+import { MessagingEntityModule } from 'src/entities/messaging/messaging.module';
 
 export const ApiAppConfigurationModule = ConfigurationServiceModule.forRoot(
   AppEnv,
@@ -24,6 +25,7 @@ export const ApiAppConfigurationModule = ConfigurationServiceModule.forRoot(
     EventEmitterModule.forRoot(),
     HealthCheckModule,
     RepositoryModule.forRoot(),
+    MessagingEntityModule,
     ImageProcessingModule,
   ],
   providers: [

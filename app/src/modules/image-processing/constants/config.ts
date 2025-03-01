@@ -6,6 +6,9 @@ export const IMAGE_PROCESSING_CONFIG = {
   },
   CSV_FILES_COUNT_LIMIT: 1,
   CSV_FILE_SIZE_LIMIT: 5 * 1024 * 1024, //5 MB
+  PROVIDERS: {
+    SCHEDULING: 'IMAGE_PROCESSING_SCHEDULING_SERVICE',
+  },
   FAILURES: {
     FILE_NOT_UPLOADED: {
       MESSAGE: 'File not present in request body',

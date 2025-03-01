@@ -1,7 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { HttpRequestConfig } from 'src/interfaces/util/http-client-service/http-client-service.interface';
+import { HttpRequestConfig } from 'src/interfaces/http-client-service/http-client-service.interface';
 import { AxiosClientService } from './services/axios-client/axios-client.service';
-import { ILogger } from 'src/interfaces/util/logger/logger.interface';
+import { ILogger } from 'src/interfaces/logger/logger.interface';
 import { providers } from 'src/constants';
 
 /** Boundary Module for Http Client Service */

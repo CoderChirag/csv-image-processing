@@ -10,10 +10,6 @@ export class CSVProduct {
   @IsNotEmpty()
   @IsUrl({}, { each: true })
   inputImageUrls: string[];
-
-  @IsArray()
-  @IsUrl({}, { each: true })
-  outputImageUrls: string[];
 }
 
 export interface CSVData {

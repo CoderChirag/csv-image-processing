@@ -1,6 +1,6 @@
 import { Logger } from 'nestjs-pino';
 import { Injectable } from '@nestjs/common';
-import { ILogger } from 'src/interfaces/util/logger/logger.interface';
+import { ILogger } from 'src/interfaces/logger/logger.interface';
 
 /** Boundary for nestjs-pino */
 @Injectable()

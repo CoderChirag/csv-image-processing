@@ -11,7 +11,7 @@ import {
 } from './interfaces/health-check.interface';
 import { OnEvent } from '@nestjs/event-emitter';
 import { config, providers } from 'src/constants';
-import { IRepositoryService } from 'src/interfaces/util/repositories/services/repository-service.interface';
+import { IRepositoryService } from 'src/interfaces/repositories/services/repository-service.interface';
 
 @Injectable()
 export class HealthCheckService
