@@ -6,6 +6,7 @@ import { MessagingEntityModule } from 'src/entities/messaging/messaging.module';
 import { ImageProcessingController } from './controllers/image-processing.controller';
 import { APP_NAMES, config, providers } from 'src/constants';
 import { ImageProcessor } from './processors/image.processor';
+import { StatusService } from './services/status.service';
 
 @Module({
   imports: [CSVEntityModule, MessagingEntityModule],
@@ -15,6 +16,10 @@ import { ImageProcessor } from './processors/image.processor';
     {
       provide: IMAGE_PROCESSING_CONFIG.PROVIDERS.SCHEDULING,
       useClass: SchedulingService,
+    },
+    {
+      provide: IMAGE_PROCESSING_CONFIG.PROVIDERS.STATUS,
+      useClass: StatusService,
     },
     {
       provide: providers.MODULES.IMAGE_PROCESSOR,

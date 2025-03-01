@@ -1,4 +1,4 @@
-import { ImageProcessingSchedulingProducts } from '../dtos/services/scheduling.service';
+import { ImageProcessingSchedulingProducts } from '../dtos/services/scheduling-service.dto';
 
 export interface ISchedulingService {
   scheduleImageProcessing(

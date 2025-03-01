@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Inject, Injectable } from '@nestjs/common';
 import { ISchedulingService } from '../interfaces/schedule-service.interface';
-import { ImageProcessingSchedulingProducts } from '../dtos/services/scheduling.service';
+import { ImageProcessingSchedulingProducts } from '../dtos/services/scheduling-service.dto';
 import { providers } from 'src/constants';
 import { IImageProcessingMessagingEntity } from 'src/interfaces/entities/messaging/image-processing.messaging-entity.interface';
 import { IRequestRepository } from 'src/interfaces/repositories/request/request-repository.interface';

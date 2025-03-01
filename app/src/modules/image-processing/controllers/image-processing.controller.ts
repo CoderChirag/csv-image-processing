@@ -1,8 +1,10 @@
 import { Response } from 'express';
 import {
   Controller,
+  Get,
   HttpException,
   Inject,
+  Param,
   Post,
   Query,
   Res,
@@ -11,7 +13,9 @@ import {
   ApiAcceptedResponse,
   ApiBody,
   ApiConsumes,
+  ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
 import { IMAGE_PROCESSING_CONFIG } from '../constants/config';
@@ -22,11 +26,14 @@ import { ICSVValidationEntity } from 'src/interfaces/entities/csv/csv-validation
 import { CSVData } from 'src/dtos/entities/csv/csv.dto';
 import { ISchedulingService } from '../interfaces/schedule-service.interface';
 import {
+  GetStatusReqParamDto,
+  GetStatusResData,
   ProcessCSVReqQueryDto,
   ProcessCSVResData,
   ProcessCSVResDto,
 } from '../dtos/controllers/image-processing.dto';
 import { HttpReqValidationPipe } from 'src/pipes/http-req-validation.pipe';
+import { IStatusService } from '../interfaces/status-service.interface';
 
 @ApiTags(IMAGE_PROCESSING_CONFIG.API_TAGS.IMAGE_PROCESSING)
 @Controller('image-processing')
@@ -36,6 +43,8 @@ export class ImageProcessingController {
     private readonly csvValidationEntity: ICSVValidationEntity,
     @Inject(IMAGE_PROCESSING_CONFIG.PROVIDERS.SCHEDULING)
     private readonly schedulingService: ISchedulingService,
+    @Inject(IMAGE_PROCESSING_CONFIG.PROVIDERS.STATUS)
+    private readonly statusService: IStatusService,
   ) {}
 
   @ApiOperation({
@@ -90,5 +99,27 @@ export class ImageProcessingController {
 
     res.status(HTTP_RESPONSE_CODES.ACCEPTED.CODE);
     return { requestId };
+  }
+
+  @ApiOperation({
+    summary: 'Api for getting the status of the request',
+    description: `This api returns the status of the request.`,
+  })
+  @ApiParam({
+    name: 'requestId',
+    description: 'Request id for fetching status',
+    example: '4acf3398-9d53-41d1-bacb-4786e9ce6bcd',
+    type: 'string',
+    required: true,
+  })
+  @ApiOkResponse({
+    description: 'Status fetched successfully',
+    type: GetStatusResData,
+  })
+  @Get('status/:requestId')
+  async getStatus(
+    @Param(HttpReqValidationPipe) params: GetStatusReqParamDto,
+  ): Promise<GetStatusResData> {
+    return await this.statusService.getStatus(params.requestId);
   }
 }
