@@ -1,4 +1,11 @@
-import { IsEnum, IsNotEmpty, IsPort, IsString, IsUrl } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsPort,
+  IsString,
+  IsUrl,
+} from 'class-validator';
 
 export class AppEnv {
   @IsEnum(
@@ -41,9 +48,15 @@ export class AppEnv {
   @IsString()
   @IsNotEmpty()
   IMAGE_PROCESSING_TOPIC_NAME: string;
+  @IsNumber()
+  @IsNotEmpty()
+  IMAGE_PROCESSING_TOPIC_PARTITIONS: number;
   @IsString()
   @IsNotEmpty()
   IMAGE_PROCESSING_DLQ_TOPIC_NAME: string;
+  @IsNumber()
+  @IsNotEmpty()
+  IMAGE_PROCESSING_DLQ_TOPIC_PARTITIONS: number;
   @IsString()
   @IsNotEmpty()
   IMAGE_PROCESSING_CONSUMER_GROUP_ID: string;
