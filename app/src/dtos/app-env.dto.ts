@@ -25,6 +25,9 @@ export class AppEnv {
   APM_BASE_URI: string;
   @IsString()
   @IsNotEmpty()
+  APM_API_KEY: string;
+  @IsString()
+  @IsNotEmpty()
   APM_SERVICE_NAME: string;
 
   @IsUrl()

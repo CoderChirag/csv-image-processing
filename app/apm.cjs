@@ -12,6 +12,7 @@ if (isMainThread) {
   /** @type import("elastic-apm-node").AgentConfigOptions */
   const options = {
     serviceName: process.env.APM_SERVICE_NAME,
+    apiKey: process.env.APM_API_KEY,
     serverUrl: process.env.APM_BASE_URI,
     environment: process.env.NODE_ENV,
     active: process.env.NODE_ENV !== 'local',
