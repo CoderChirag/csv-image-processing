@@ -1,0 +1,59 @@
+{{- include "schemaRegistry.values" . -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: "{{ .Release.Name }}-schema-registry"
+  namespace: "{{ .Release.Namespace }}"
+  annotations:
+    app.kubernetes.io/name: schema-registry
+spec:
+  serviceName: "{{ .Release.Name }}-schema-registry"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}-schema-registry"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}-schema-registry"
+    spec:
+      containers:
+        - name: schema-registry
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8085
+              name: http
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: SCHEMA_REGISTRY_HOST_NAME
+              value: "$(POD_NAME).{{.Release.Name}}.{{.Release.Namespace}}.svc.cluster.local"
+            - name: SCHEMA_REGISTRY_LISTENERS
+              value: "http://0.0.0.0:8085"
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          startupProbe:
+            httpGet:
+              path: /subjects
+              port: 8085
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /subjects
+              port: 8085
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /subjects
+              port: 8085
+            periodSeconds: 10
+            failureThreshold: 3

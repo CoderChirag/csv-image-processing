@@ -3,6 +3,13 @@ kafka:
     repository: confluentinc/cp-kafka
     tag: 7.2.1.arm64
   replicaCount: 1
+  resources:
+    requests:
+      memory: 768Mi
+      cpu: 250m
+    limits:
+      memory: 1536Mi
+      cpu: 500m
   env:
     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
     KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
@@ -16,3 +23,21 @@ kafka:
     KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
     KAFKA_JMX_PORT: "9997"
     KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=$(POD_NAME).kafka0-service.default.svc.cluster.local -Dcom.sun.management.jmxremote.rmi.port=9997"
+schemaRegistry:
+  image:
+    repository: confluentinc/cp-schema-registry
+    tag: 7.2.1.arm64
+  replicaCount: 1
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 125m
+    limits:
+      memory: 512Mi
+      cpu: 150m
+  env:
+    SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "PLAINTEXT://kafka-0.kafka.kafka.svc.cluster.local:29092"
+    SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: PLAINTEXT
+    SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: "http"
+    SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: INFO
+    SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas

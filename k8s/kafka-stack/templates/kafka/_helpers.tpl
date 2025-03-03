@@ -4,6 +4,7 @@
 {{- if hasKey .Values "kafka" -}}
 {{- $_ := set .Values "image" .Values.kafka.image -}}
 {{- $_ := set .Values "replicaCount" .Values.kafka.replicaCount -}}
+{{- $_ := set .Values "resources" .Values.kafka.resources -}}
 {{- $_ := set .Values "env" .Values.kafka.env -}}
 {{- end -}}
 {{- end -}}
