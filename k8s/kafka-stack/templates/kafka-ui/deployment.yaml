@@ -1,0 +1,55 @@
+{{- include "kafkaUi.values" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-ui
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    app.kubernetes.io/name: kafka-ui
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-ui
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-ui
+    spec:
+      containers:
+        - name: kafka-ui
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+              port: 80
+              protocol: TCP
+              name: http
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 3
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 3
+            timeoutSeconds: 10

@@ -45,15 +45,18 @@ spec:
             initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 3
+            timeoutSeconds: 10
           livenessProbe:
             httpGet:
               path: /subjects
               port: 8085
             periodSeconds: 10
             failureThreshold: 3
+            timeoutSeconds: 10
           readinessProbe:
             httpGet:
               path: /subjects
               port: 8085
             periodSeconds: 10
             failureThreshold: 3
+            timeoutSeconds: 10

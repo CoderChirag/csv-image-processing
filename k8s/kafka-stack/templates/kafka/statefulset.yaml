@@ -101,18 +101,20 @@ spec:
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 3
+            timeoutSeconds: 10
           livenessProbe:
             tcpSocket:
               port: 29092  # Internal PLAINTEXT port
             periodSeconds: 10
             failureThreshold: 3
+            timeoutSeconds: 10
           readinessProbe:
             exec:
               command:
                 - "sh"
                 - "-c"
                 - "kafka-broker-api-versions --bootstrap-server localhost:29092"
-            timeoutSeconds: 30
+            timeoutSeconds: 10
             periodSeconds: 10
             failureThreshold: 3
       volumes:

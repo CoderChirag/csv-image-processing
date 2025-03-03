@@ -31,7 +31,7 @@ schemaRegistry:
   resources:
     requests:
       memory: 256Mi
-      cpu: 125m
+      cpu: 50m
     limits:
       memory: 512Mi
       cpu: 150m
@@ -41,3 +41,23 @@ schemaRegistry:
     SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: "http"
     SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: INFO
     SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+kafkaUi:
+  image:
+    repository: provectuslabs/kafka-ui
+    tag: v0.7.2
+  replicaCount: 1
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 50m
+    limits:
+      memory: 512Mi
+      cpu: 150m
+  env:
+    KAFKA_CLUSTERS_0_NAME: kafka
+    KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-0.kafka.kafka.svc.cluster.local:29092
+    KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+    KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://kafka-schema-registry-0.kafka-schema-registry.kafka.svc.cluster.local:8085
+    # DYNAMIC_CONFIG_ENABLED: "true"
+    KAFKA_CLUSTERS_0_AUDIT_TOPICAUDITENABLED: "true"
+    KAFKA_CLUSTERS_0_AUDIT_CONSOLEAUDITENABLED: "true"
