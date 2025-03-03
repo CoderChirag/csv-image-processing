@@ -9,6 +9,7 @@ import { RepositoryModule } from 'src/services/repository-service/repository.mod
 import { appEnvTransformer } from 'src/transformers/app-env.transformer';
 import { ConsumerAppLifecycleService } from './consumer-app-lifecycle.service';
 import { ImageProcessingModule } from 'src/modules/image-processing/image-processing.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 export const ConsumerAppConfigurationModule =
   ConfigurationServiceModule.forRoot(
@@ -20,6 +21,7 @@ export const ConsumerAppConfigurationModule =
 @Module({
   imports: [
     LoggerModule.forRoot(),
+    ScheduleModule.forRoot(),
     ConsumerAppConfigurationModule,
     EventEmitterModule.forRoot(),
     RepositoryModule.forRoot(),

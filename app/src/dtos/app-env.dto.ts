@@ -26,6 +26,9 @@ export class AppEnv {
   @IsString()
   @IsNotEmpty()
   APM_API_KEY: string;
+  @IsNumber()
+  @IsNotEmpty()
+  LIVENESS_WRITE_INTERVAL: number;
   @IsString()
   @IsNotEmpty()
   APM_SERVICE_NAME: string;

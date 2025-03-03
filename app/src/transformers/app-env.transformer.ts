@@ -5,6 +5,12 @@ export function appEnvTransformer(env: Record<string, string>) {
     transformedEnv.APM_API_KEY = 'key';
   }
 
+  if (env.LIVENESS_WRITE_INTERVAL) {
+    transformedEnv.LIVENESS_WRITE_INTERVAL = Number(
+      env.LIVENESS_WRITE_INTERVAL,
+    );
+  }
+
   if (env.IMAGE_PROCESSING_TOPIC_PARTITIONS) {
     transformedEnv.IMAGE_PROCESSING_TOPIC_PARTITIONS = Number(
       env.IMAGE_PROCESSING_TOPIC_PARTITIONS,

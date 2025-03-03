@@ -14,6 +14,8 @@ export const config = {
     SERVER_URL: process.env.SERVER_URL!,
     GLOBAL_API_PREFIX: 'api',
     HEALTH_CHECK_ROUTES_PREFIX: 'health-check',
+    LIVENESS_FILE_PATH: '../liveness/liveness.txt',
+    LIVENESS_CHECK_INTERVAL: Number(process.env.LIVENESS_WRITE_INTERVAL!),
   },
   DB: {
     CONNECTION_STRING: process.env.MONGODB_URI!,
