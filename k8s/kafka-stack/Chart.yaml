@@ -1,4 +1,4 @@
 apiVersion: v2
-name: kafka
+name: kafka-stack
 type: application
 version: 1.0.0

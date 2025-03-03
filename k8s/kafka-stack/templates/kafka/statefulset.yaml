@@ -1,3 +1,4 @@
+{{- include "kafka.values" . }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -109,7 +110,8 @@ spec:
               command:
                 - "sh"
                 - "-c"
-                - "/home/appuser/kafka-broker-api-versions --bootstrap-server localhost:29092"
+                - "kafka-broker-api-versions --bootstrap-server localhost:29092"
+            timeoutSeconds: 30
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 3
