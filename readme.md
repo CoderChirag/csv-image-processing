@@ -130,10 +130,10 @@ The project uses AVRO encoding format for enforcing a strict schema to any messa
 }
 
 ```
-Currently 3 **partitions** are configured for our topic among which data is divided equally by keeping request id as key, so at most 3 consumers can work simultaneously.
-**Replication factor** currently defaults to 1 due to limited deployment resources, so the system is not in a fault tolerance mode right now.
+- Currently 3 **partitions** are configured for our topic among which data is divided equally by keeping request id as key, so at most 3 consumers can work simultaneously.
+- **Replication factor** currently defaults to 1 due to limited deployment resources, so the system is not in a fault tolerance mode right now.
 
-#### Consumer Service
+#### 4. Consumer Service
 **Technology:** NestJs (Node.js, kafkajs, sharp, axios, mongodb).
 **Input:** Kafka image-processing topic.
 **Process:**
