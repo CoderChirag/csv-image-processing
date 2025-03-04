@@ -72,6 +72,8 @@ This is the document schema:
 }
 ```
 
+![db_schema](db_schema.png)
+
 #### 2. API Service
 
 **Technology:** NestJS (Node.js).
