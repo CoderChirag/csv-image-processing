@@ -24,19 +24,7 @@ The system follows a microservices architecture with event-driven communication,
 
 ### Architecture Diagram
 
-```
-[Client] --> [API Service] --> [Kafka Cluster] --> [Consumer Service] --> [GitHub Repository]
-   |          |                  |                     |                     |
-   |          |                  +--> [Schema Registry]|                     |
-   |          +--> [MongoDB]     |                     +--> [MongoDB]        |
-   |          |                  |                     |                     |
-   |          +--> [Webhook] <-------------------------+                     |
-   |          |                  |                     |                     |
-   |          +--> [APM] --> [Elasticsearch] --> [Kibana]                    |
-   |          |                                        |                     |
-   |          +--> [Kafka UI]                          |                     |
-   +---------> [Webhook Callback] <--------------------+
-```
+![system_architecture_diagram](./wiki/system-architecture.png)
 ### Data Flow
 **Client:** Submits data and registers webhooks, and checks for status via API.
 **API Service:** Publishes events to Kafka, stores status, input data, and webhook config to MongoDB.
