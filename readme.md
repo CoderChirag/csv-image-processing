@@ -71,7 +71,7 @@ This is the document schema:
 }
 ```
 
-#### API Service
+#### 2. API Service
 
 **Technology:** NestJS (Node.js).
 
@@ -86,7 +86,7 @@ This is the document schema:
 - POST /api/image-processing/status/:reqId:
   - Fetches the status for the give requestId from db.
 
-#### Kafka Schema Design
+#### 3. Kafka Schema Design
 
 The project uses AVRO encoding format for enforcing a strict schema to any message being pushed into Kafka Topic. Following is the AVRO schema for our topic:
 ```json
