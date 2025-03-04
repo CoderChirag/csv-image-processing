@@ -74,6 +74,7 @@ This is the document schema:
 #### API Service
 
 **Technology:** NestJS (Node.js).
+
 **API Endpoints:**
 - POST /api/image-processing/process/csv:
   - Accepts structured data (multipart csv file).
