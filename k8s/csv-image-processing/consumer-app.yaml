@@ -1,0 +1,34 @@
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1536Mi
+    cpu: 500m
+env:
+  APP_NAME: consumer-app
+startupProbe:
+  exec:
+    command:
+      - /bin/sh
+      - -c
+      - 'if test $(find /usr/src/liveness/liveness.txt -mmin -1); then echo "Startup probe is running: received exit code 0"; exit 0; else echo "Startup probe is running: received exit code 1"; exit 1; fi'
+  initialDelaySeconds: 90
+  periodSeconds: 10
+  failureThreshold: 3
+livenessProbe:
+  exec:
+    command:
+      - /bin/sh
+      - -c
+      - 'if test $(find /usr/src/liveness/liveness.txt -mmin -1); then echo "Liveness probe is running: received exit code 0"; exit 0; else echo "Liveness probe is running: received exit code 1"; exit 1; fi'
+  periodSeconds: 10
+  failureThreshold: 3
+readinessProbe:
+  exec:
+    command:
+      - /bin/sh
+      - -c
+      - 'if test $(find /usr/src/liveness/liveness.txt -mmin -1); then echo "Readiness probe is running: received exit code 0"; exit 0; else echo "Readiness probe is running: received exit code 1"; exit 1; fi'
+  periodSeconds: 10
+  failureThreshold: 3

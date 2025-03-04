@@ -14,7 +14,8 @@
     "start:dev": "lerna run start:dev --scope app --stream",
     "start:consumer:dev": "lerna run start:consumer:dev --scope app --stream",
     "test": "lerna run test --scope app --stream",
-    "test:cov": "lerna run test:cov --scope app --stream"
+    "test:cov": "lerna run test:cov --scope app --stream",
+    "cleanup": "yarn cache clean &&rm -rf node_modules && lerna clean --stream"
   },
   "devDependencies": {
     "concurrently": "8.2.2",

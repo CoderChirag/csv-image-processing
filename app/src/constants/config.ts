@@ -14,7 +14,7 @@ export const config = {
     SERVER_URL: process.env.SERVER_URL!,
     GLOBAL_API_PREFIX: 'api',
     HEALTH_CHECK_ROUTES_PREFIX: 'health-check',
-    LIVENESS_FILE_PATH: '../liveness/liveness.txt',
+    LIVENESS_FILE_PATH: process.env.LIVENESS_FILE_PATH!,
     LIVENESS_CHECK_INTERVAL: Number(process.env.LIVENESS_WRITE_INTERVAL!),
   },
   DB: {
@@ -24,6 +24,7 @@ export const config = {
     MONGO_POOL_SIZE: 10,
   },
   QUEUE: {
+    AVRO_SCHEMAS_DIR: process.env.AVRO_SCHEMAS_DIR_PATH!,
     KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID!,
     KAFKA_BROKERS: process.env.KAFKA_BROKERS!.split(','),
     SCHEMA_REGISTRY_HOST: process.env.SCHEMA_REGISTRY_HOST!,

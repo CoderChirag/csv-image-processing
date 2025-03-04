@@ -1,22 +1,18 @@
 FROM node:18.20-alpine AS builder
 
-WORKDIR /user/src
+WORKDIR /usr/src
 
 RUN apk update && apk add ca-certificates && apk add dumb-init && rm -rf /var/cache/apk/*
 RUN corepack enable
 
-COPY package.json .yarnrc.yml lerna.json nx.json yarn.lock ./
-
-COPY app/package.json app/.yarnrc.yaml ./app/
-
-COPY packages/*/package.json ./packages/*/package.json
-COPY packages/*/.yarnrc.yaml ./packages/*/.yarnrc.yaml
+COPY . .
 
 RUN yarn install --immutable
 
-COPY . .
-
 RUN yarn build && yarn cache clean
+RUN rm -rf node_modules
+RUN rm -rf app/node_modules
+RUN rm -rf packages/*/node_modules
 
 FROM node:18.20-alpine AS runner
 
@@ -25,16 +21,10 @@ WORKDIR /usr/src
 RUN apk update && apk add ca-certificates && apk add dumb-init && rm -rf /var/cache/apk/*
 RUN corepack enable
 
-COPY --from=builder /usr/src/package.json /usr/src/.yarnrc.yml /usr/src/lerna.json /usr/src/nx.json /usr/src/yarn.lock ./
+COPY --from=builder /usr/src ./
 
-COPY --from=builder /usr/src/app/dist /usr/src/app/package.json /usr/src/app/.yarnrc.yaml ./app/
-
-COPY --from=builder /usr/src/packages/*/dist ./packages/*/dist
-COPY --from=builder /usr/src/packages/*/package.json ./packages/*/package.json
-COPY --from=builder /usr/src/packages/*/.yarnrc.yaml ./packages/*/.yarnrc.yaml
-
-RUN yarn workspaces focus --production
+RUN yarn workspaces focus --all --production
 
 EXPOSE 3000
 
-CMD ["dumb-init", "node", "-r", "app/apm.cjs", "app/dist/main.js"]
+CMD ["dumb-init", "node", "-r", "/usr/src/app/apm.cjs", "/usr/src/app/dist/main.js"]

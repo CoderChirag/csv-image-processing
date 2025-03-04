@@ -1,4 +1,4 @@
-import { join, resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { KafkaService } from '@app/queue-service';
 import { Inject, Injectable } from '@nestjs/common';
@@ -13,7 +13,7 @@ export class MessagingEntity implements IMessagingEntity {
   ) {}
 
   async registerSchemas(): Promise<void> {
-    const schemasDir = join(process.cwd(), MESSAGING_ENTITY_CONFIG.SCHEMAS_DIR);
+    const schemasDir = config.QUEUE.AVRO_SCHEMAS_DIR;
     const schemas = await readdir(schemasDir);
     for (const path of schemas) {
       const schemaPath = resolve(schemasDir, path);

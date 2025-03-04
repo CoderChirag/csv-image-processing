@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}-{{ .Values.env.APP_NAME }}"
+  namespace: "{{ .Release.Namespace }}"
+  annotations:
+    app.kubernetes.io/name: {{ .Values.env.APP_NAME }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}-{{ .Values.env.APP_NAME }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}-{{ .Values.env.APP_NAME }}"
+    spec:
+      terminationGracePeriodSeconds: 125
+      containers:
+        - name: "{{ .Values.env.APP_NAME }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "kill -SIGUSR1 $(pgrep node); sleep 120"]
+          ports:
+            {{ if .Values.service.enabled }}
+            - containerPort: {{ .Values.env.PORT }}
+              name: http
+            {{ end }}
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-uri
+                  key: MONGO_URI
+            - name: APM_BASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: apm-uri
+                  key: APM_URI
+            - name: APM_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: apm-api-key
+                  key: APM_API_KEY
+            - name: FILE_UPLOAD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gh-pat-token
+                  key: GH_PAT_TOKEN
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          startupProbe:
+            {{- toYaml .Values.startupProbe | nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}

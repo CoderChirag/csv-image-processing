@@ -1,3 +1,5 @@
+import { dirname } from 'node:path';
+import { mkdir, writeFile } from 'node:fs/promises';
 import {
   Inject,
   Injectable,
@@ -7,8 +9,6 @@ import {
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Interval } from '@nestjs/schedule';
-import { mkdir, writeFile } from 'fs/promises';
-import { dirname } from 'path';
 import { config, providers } from 'src/constants';
 import { IImageProcessingMessagingEntity } from 'src/interfaces/entities/messaging/image-processing.messaging-entity.interface';
 import { ILogger } from 'src/interfaces/logger/logger.interface';

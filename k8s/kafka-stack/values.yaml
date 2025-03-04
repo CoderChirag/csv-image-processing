@@ -1,7 +1,7 @@
 kafka:
   image:
     repository: confluentinc/cp-kafka
-    tag: 7.2.1.arm64
+    tag: 7.2.1
   replicaCount: 1
   resources:
     requests:
@@ -20,13 +20,13 @@ kafka:
     KAFKA_PROCESS_ROLES: "broker,controller"
     KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:9092"
     KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
-    KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+    KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs/data"
     KAFKA_JMX_PORT: "9997"
     KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=$(POD_NAME).kafka0-service.default.svc.cluster.local -Dcom.sun.management.jmxremote.rmi.port=9997"
 schemaRegistry:
   image:
     repository: confluentinc/cp-schema-registry
-    tag: 7.2.1.arm64
+    tag: 7.2.1
   replicaCount: 1
   resources:
     requests:

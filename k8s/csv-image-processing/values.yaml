@@ -1,0 +1,26 @@
+image:
+  repository: coderchirag2002/csv-image-processing
+  tag: 1.0.3
+service:
+  enabled: false
+replicaCount: 1
+env:
+  PORT: 8080
+  NODE_ENV: production
+  APM_SERVICE_NAME: csv-image-processing
+  SERVER_URL: http://csv-image-processing.api
+  LIVENESS_FILE_PATH: /usr/src/liveness/liveness.txt
+  LIVENESS_WRITE_INTERVAL: 10000
+  KAFKA_CLIENT_ID: csv-image-processing
+  KAFKA_BROKERS: kafka-0.kafka.kafka.svc.cluster.local:29092
+  SCHEMA_REGISTRY_HOST: http://kafka-schema-registry-0.kafka-schema-registry.kafka.svc.cluster.local:8085
+  AVRO_SCHEMAS_DIR_PATH: /usr/src/app/avro-schemas
+  IMAGE_PROCESSING_TOPIC_NAME: image-processing.prod
+  IMAGE_PROCESSING_TOPIC_PARTITIONS: 3
+  IMAGE_PROCESSING_DLQ_TOPIC_NAME: image-processing.prod.DLQ
+  IMAGE_PROCESSING_DLQ_TOPIC_PARTITIONS: 3
+  IMAGE_PROCESSING_CONSUMER_GROUP_ID: image-processing-consumer.prod
+  FILE_UPLOAD_BASE_URL: https://api.github.com/repos/coderchirag/csv-image-processing/contents/production
+  FILE_UPLOAD_AUTHOR: CoderChirag
+  FILE_UPLOAD_EMAIL: jain.chirag0174@gmail.com
+  FILE_UPLOAD_BRANCH: uploads

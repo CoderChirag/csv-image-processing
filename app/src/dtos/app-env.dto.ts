@@ -31,6 +31,9 @@ export class AppEnv {
   LIVENESS_WRITE_INTERVAL: number;
   @IsString()
   @IsNotEmpty()
+  LIVENESS_FILE_PATH: string;
+  @IsString()
+  @IsNotEmpty()
   APM_SERVICE_NAME: string;
 
   @IsUrl()
@@ -50,6 +53,9 @@ export class AppEnv {
   @IsString()
   @IsNotEmpty()
   SCHEMA_REGISTRY_HOST: string;
+  @IsString()
+  @IsNotEmpty()
+  AVRO_SCHEMAS_DIR_PATH: string;
 
   @IsString()
   @IsNotEmpty()

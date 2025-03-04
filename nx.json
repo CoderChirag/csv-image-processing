@@ -11,6 +11,10 @@
     "start:consumer:dev": {
       "dependsOn": ["^build"],
       "cache": false
+    },
+    "cleanup": {
+      "dependsOn": ["^cleanup"],
+      "cache": false
     }
   }
 }

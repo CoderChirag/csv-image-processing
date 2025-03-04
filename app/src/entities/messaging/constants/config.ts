@@ -1,7 +1,6 @@
 import { config } from 'src/constants';
 
 export const MESSAGING_ENTITY_CONFIG = {
-  SCHEMAS_DIR: 'avro-schemas',
   PUBLISH_TOPICS: {
     IMAGE_PROCESSING: {
       TOPIC_NAME: config.QUEUE.IMAGE_PROCESSING_TOPIC_NAME,
