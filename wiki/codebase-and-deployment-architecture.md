@@ -15,7 +15,7 @@ The system is deployed as a Kubernetes cluster on GKE, utilizing a single node p
 ## Codebase Overview
 
 - The repository is designed as a monorepo powered by `yarn workspaces`, `lerna` and `nx`. The same codebase (hence the same image) serves for both API app, as well as Consumer App depending on the environment variables.
-- In the monorepo `packages/*` are the custom written libraries for standardizing interactions to Database, Queues, Caches etc, the their corresponding NestJs Custom Module Wrappers.
+- In the monorepo `packages/*` are the custom written libraries for standardizing interactions to Database, Queues, Caches etc, and their corresponding NestJs Custom Module Wrappers.
 - `app/*` is the core source code for the API and consumer application and is powered by NestJS following **Robert C. Martin's Clean Coding Principles** and adhering to **SOLID guidelines**.
 - All the deployment configurations are present in the `./k8s` folder in form of **Helm Charts** for templating, packaging & releasing Kubernetes Manifests in an efficient, maintainable & reusable way
 - `Dockerfile` is present in the root of the repository, which is a multi-staged dockerfile written in a very optimized manner.
