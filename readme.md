@@ -135,7 +135,9 @@ The project uses AVRO encoding format for enforcing a strict schema to any messa
 
 #### 4. Consumer Service
 **Technology:** NestJs (Node.js, kafkajs, sharp, axios, mongodb).
+
 **Input:** Kafka image-processing topic.
+
 **Process:**
   - Images are downloaded from the specified inputImageUrls, and streamed to temp files (not stored in memory as buffer for memory optimization).
   - Then converted to 50% less quality using sharp
