@@ -68,7 +68,7 @@ Currently, the system treats requests as isolated units, with no need for comple
 Should requirements evolve to introduce relational data—such as registering products as standalone entities, associating requests with product IDs, or tracking relationships between images and categories—a relational database (e.g., PostgreSQL or MySQL) might become necessary.
 
 This is the document schema:
-```json
+```js
 {
   requestId: { type: String, required: true, unique: true },
   status: { type: String, required: true, enum: ["Accepted", "Processing", "Failed", "Succeeded"] },
