@@ -26,13 +26,13 @@ The system follows a microservices architecture with event-driven communication,
 
 ![system_architecture_diagram](./wiki/system-architecture.png)
 ### Data Flow
-**Client:** Submits data and registers webhooks, and checks for status via API.
-**API Service:** Publishes events to Kafka, stores status, input data, and webhook config to MongoDB.
-**Kafka Cluster:** Routes events to Consumer.
-**Consumer Service:** Processes images, updates MongoDB, uploads file to github, and triggers webhooks to sends notifications to client.
-**MongoDB:** Stores input data, output data and webhook subscriptions.
-**ELK:** Provides logging and observability.
-**Kafka UI:** Provides monitoring for Kafka state.
+- **Client:** Submits data and registers webhooks, and checks for status via API.
+- **API Service:** Publishes events to Kafka, stores status, input data, and webhook config to MongoDB.
+- **Kafka Cluster:** Routes events to Consumer.
+- **Consumer Service:** Processes images, updates MongoDB, uploads file to github, and triggers webhooks to sends notifications to client.
+- **MongoDB:** Stores input data, output data and webhook subscriptions.
+- **ELK:** Provides logging and observability.
+- **Kafka UI:** Provides monitoring for Kafka state.
 
 ### Design Principles
 
