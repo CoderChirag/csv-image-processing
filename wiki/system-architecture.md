@@ -145,3 +145,9 @@ The project uses AVRO encoding format for enforcing a strict schema to any messa
   - Then converted to 50% less quality using sharp
   - After conversion, processed images are uploaded to GitHub (for free storage), and outputImageUrls are stored to MongoDB
   - Finally a webhook is triggered with the output csv (content-type: text/csv) to notify the end user.
+  
+#### 5. Monitoring & Observability
+
+With ELK with APM setup, we get the complete transaction observability.
+
+![observability](elk.png)

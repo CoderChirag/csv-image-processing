@@ -14,11 +14,11 @@ env:
   KAFKA_BROKERS: kafka-0.kafka.kafka.svc.cluster.local:29092
   SCHEMA_REGISTRY_HOST: http://kafka-schema-registry-0.kafka-schema-registry.kafka.svc.cluster.local:8085
   AVRO_SCHEMAS_DIR_PATH: /usr/src/app/avro-schemas
-  IMAGE_PROCESSING_TOPIC_NAME: image-processing.prod
+  IMAGE_PROCESSING_TOPIC_NAME: image-processing-production
   IMAGE_PROCESSING_TOPIC_PARTITIONS: 3
-  IMAGE_PROCESSING_DLQ_TOPIC_NAME: image-processing.prod.DLQ
+  IMAGE_PROCESSING_DLQ_TOPIC_NAME: image-processing-production.DLQ
   IMAGE_PROCESSING_DLQ_TOPIC_PARTITIONS: 3
-  IMAGE_PROCESSING_CONSUMER_GROUP_ID: image-processing-consumer.prod
+  IMAGE_PROCESSING_CONSUMER_GROUP_ID: image-processing-consumer-production
   FILE_UPLOAD_BASE_URL: https://api.github.com/repos/coderchirag/csv-image-processing/contents/production
   FILE_UPLOAD_AUTHOR: CoderChirag
   FILE_UPLOAD_EMAIL: jain.chirag0174@gmail.com

@@ -144,6 +144,12 @@ The project uses AVRO encoding format for enforcing a strict schema to any messa
   - After conversion, processed images are uploaded to GitHub (for free storage), and outputImageUrls are stored to MongoDB
   - Finally a webhook is triggered with the output csv (content-type: text/csv) to notify the end user.
 
+#### 5. Monitoring & Observability
+
+With ELK with APM setup, we get the complete transaction observability.
+
+![observability](./wiki/elk.png)
+
 # Codebase & Deployment Architecture, Decisions, Cost Solutioning, & Process Document: Image Processing System
 
 The Image Processing System is deployed on a Single Node (4vCPUs, 8GiB RAM, 100GB Storage) Google Kubernetes Engine (GKE) to leverage its managed Kubernetes capabilities for scalability, reliability, and ease of maintenance. This document details the deployment architecture, justifies key decisions, estimates operational costs, and provides a step-by-step deployment process. The system integrates Kafka for event streaming (deployed on cluster), MongoDB (Atlas free tier) for persistence and ELK Stack (elastic cloud free trial) for observability, with all components orchestrated as containerized workloads.
