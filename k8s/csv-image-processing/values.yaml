@@ -3,12 +3,11 @@ image:
   tag: 1.0.4
 service:
   enabled: false
-replicaCount: 1
+replicaCount: 2
 env:
   PORT: 8080
   NODE_ENV: production
   APM_SERVICE_NAME: csv-image-processing
-  SERVER_URL: http://csv-image-processing.api
   LIVENESS_FILE_PATH: /usr/src/liveness/liveness.txt
   LIVENESS_WRITE_INTERVAL: 10000
   KAFKA_CLIENT_ID: csv-image-processing

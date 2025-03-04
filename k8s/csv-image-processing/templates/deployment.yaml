@@ -49,6 +49,11 @@ spec:
                 secretKeyRef:
                   name: gh-pat-token
                   key: GH_PAT_TOKEN
+            - name: SERVER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: server-url
+                  key: SERVER_URL
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
