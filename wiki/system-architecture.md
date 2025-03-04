@@ -37,11 +37,11 @@ The system follows a microservices architecture with event-driven communication,
 
 ### Design Principles
 
-**Scalability:** Kafka partitions, service replicas, webhook fan-out.
-**Efficiency:** Asynchronous processing, optimized storage and notifications.
-**Reliability:** Kafka replication, MongoDB durability, webhook retries.
-**Fault Tolerance:** Dead-letter queues, retry mechanisms, service restarts.
-**Maintainability:** Modular design, centralized logging, UI monitoring.
+- **Scalability:** Kafka partitions, service replicas, webhook fan-out.
+- **Efficiency:** Asynchronous processing, optimized storage and notifications.
+- **Reliability:** Kafka replication, MongoDB durability, webhook retries.
+- **Fault Tolerance:** Dead-letter queues, retry mechanisms, service restarts.
+- **Maintainability:** Modular design, centralized logging, UI monitoring.
 
 ## Low-Level Design (LLD)
 
