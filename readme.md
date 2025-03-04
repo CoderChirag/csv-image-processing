@@ -83,7 +83,7 @@ This is the document schema:
   - Update Status and CSV data to DB corresponding to a requestId
   - Publishes event to Kafka
   - Returns the requestId
-- POST /api/image-processing/status/:reqId: Registers webhook URLs.
+- POST /api/image-processing/status/:reqId:
   - Fetches the status for the give requestId from db.
 
 #### Kafka Schema Design
